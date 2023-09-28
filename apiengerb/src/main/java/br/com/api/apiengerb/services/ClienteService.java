@@ -42,4 +42,14 @@ public class ClienteService {
         }
 
     }
+
+    // Metodo para remove Cliente
+    public ResponseEntity<RespostaModelo> remover(int idCliente){
+
+        cr.deleteById(idCliente);
+
+        rm.setMensagem("Produto removido com Sucesso!");
+        return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
+        
+    }
 }
