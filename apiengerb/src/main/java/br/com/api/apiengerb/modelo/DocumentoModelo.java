@@ -1,5 +1,6 @@
 package br.com.api.apiengerb.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,18 +17,18 @@ import lombok.Setter;
 @Setter
 public class DocumentoModelo {
 
-    //Definindo atributo idDocumento como chave da tabela
+    // Definindo atributo idDocumento como chave da tabela
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDocumento;
-    
-    //Chave estrangeira id_Cliente
+
+    // Chave estrangeira id_Cliente
     @ManyToOne
     @JoinColumn(name = "id_Cliente")
     private ClienteModelo cliente;
-
+    @Column(unique = true)
     private String nomeDocumento;
-    private Integer tamanhoDocumento; 
+    private Integer tamanhoDocumento;
     private String linkDocumento;
 
 }

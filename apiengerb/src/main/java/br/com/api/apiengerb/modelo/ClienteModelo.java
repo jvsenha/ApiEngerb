@@ -21,9 +21,12 @@ public class ClienteModelo {
     @Column(name = "idCliente")
     private Integer idCliente;
     private String nomeCliente;
+    @Column(unique=true)
     private String emailCliente;
+    @Column(unique=true)
     private String usuarioCliente;
     private String senhaCliente;
+    @Column(unique=true)
     private String pastaCliente;
 
 
