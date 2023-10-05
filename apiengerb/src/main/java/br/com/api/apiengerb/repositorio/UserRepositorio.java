@@ -9,5 +9,5 @@ import br.com.api.apiengerb.modelo.UserModelo;
 @Repository
 public interface UserRepositorio extends JpaRepository <UserModelo, Integer>{
     
-     UserDetails findByLogin(String usuarioUser);
+     UserDetails findByLogin(String login);
 }

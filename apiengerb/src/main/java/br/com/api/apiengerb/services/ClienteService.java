@@ -13,12 +13,9 @@ import br.com.api.apiengerb.repositorio.ClienteRepositorio;
 @Service
 public class ClienteService {
 
-      private final ClienteRepositorio cr;
-
     @Autowired
-    public ClienteService(ClienteRepositorio cr) {
-        this.cr = cr;
-    }
+    private ClienteRepositorio cr;
+
     //
     @Autowired
     private RespostaModelo rm;
@@ -37,7 +34,7 @@ public class ClienteService {
         } else if (cm.getEmailCliente().equals("")) {
             rm.setMensagem("O email do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
-        } else if (cm.getUsuarioUser().equals("")) {
+        } else if (cm.getLogin().equals("")) {
             rm.setMensagem("O nome de usuario do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else if (cm.getSenhaUser().equals("")) {

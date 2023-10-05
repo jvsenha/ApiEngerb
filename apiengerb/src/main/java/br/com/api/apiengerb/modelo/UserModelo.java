@@ -8,10 +8,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED) 
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,7 +39,7 @@ public class UserModelo implements UserDetails {
     private String nomeUser;
     @Column(unique=true)
     @NotBlank
-    private String usuarioUser;
+    private String login;
     @Column(length = 32)
     @NotBlank
     private String senhaUser;
@@ -55,7 +58,7 @@ public class UserModelo implements UserDetails {
     }
     @Override
     public String getUsername() {
-      return usuarioUser;
+      return login;
     }
     @Override
     public boolean isAccountNonExpired() {

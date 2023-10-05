@@ -16,7 +16,6 @@ import lombok.Setter;
 @Table(name = "cliente")
 @Getter
 @Setter
-@Inheritance (strategy = InheritanceType.JOINED)
 public class ClienteModelo extends UserModelo{
     //Definindo atributo idCliente como chave da tabela
 
