@@ -1,6 +1,7 @@
 package br.com.api.apiengerb.modelo;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Table(name = "empresa")
 @Getter
 @Setter
+@DiscriminatorValue("EMPRESA")
 public class EmpresaModelo extends UserModelo {
 
     //Definindo demais atributos da tabela

@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +30,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING) 
 public class UserModelo implements UserDetails { 
 
     @Column(name = "idUser")
