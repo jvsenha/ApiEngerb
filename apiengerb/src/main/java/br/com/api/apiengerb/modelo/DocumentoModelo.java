@@ -25,9 +25,10 @@ public class DocumentoModelo {
 
     // Chave estrangeira id_Cliente
     @ManyToOne
-    @JoinColumn(name = "id_Cliente")
+    @JoinColumn(name = " id_cliente", referencedColumnName = "id_cliente")
     @NotBlank
     private ClienteModelo cliente;
+
     @Column(unique = true)
     @NotBlank
     private String nomeDocumento;

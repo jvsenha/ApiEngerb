@@ -4,7 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -15,23 +16,17 @@ import lombok.Setter;
 @Table(name = "cliente")
 @Getter
 @Setter
+@Inheritance (strategy = InheritanceType.JOINED)
 public class ClienteModelo extends UserModelo{
     //Definindo atributo idCliente como chave da tabela
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCliente")
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ou a estratégia de geração apropriada
+    @Column(name = "id_cliente")
     private Integer idCliente;
-    @NotBlank
-    private UserModelo nomeCliente;
+
     @Column(unique=true)
     @NotBlank
     private String emailCliente;
-    @Column(unique=true)
-    @NotBlank
-    private UserModelo usuarioCliente;
-    @NotBlank
-    @Column(length = 32)
-    private UserModelo senhaCliente;
     @Column(unique=true)
     @NotBlank
     private String pastaCliente;

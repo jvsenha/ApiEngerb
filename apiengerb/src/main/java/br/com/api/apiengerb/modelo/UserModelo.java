@@ -2,15 +2,16 @@ package br.com.api.apiengerb.modelo;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@Entity
+@MappedSuperclass
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,9 +27,10 @@ import lombok.Setter;
 @Setter
 public class UserModelo implements UserDetails { 
 
+    @Column(name = "idUser")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUser")
+    
     private Integer idUser;
     @NotBlank
     private String nomeUser;

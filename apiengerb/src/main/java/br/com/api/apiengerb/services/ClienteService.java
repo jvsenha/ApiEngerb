@@ -7,14 +7,18 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.RespostaModelo;
-import br.com.api.apiengerb.repositório.ClienteRepositorio;
+import br.com.api.apiengerb.repositorio.ClienteRepositorio;
+
 
 @Service
-public class ClienteService{
+public class ClienteService {
+
+      private final ClienteRepositorio cr;
 
     @Autowired
-    private ClienteRepositorio cr;
-
+    public ClienteService(ClienteRepositorio cr) {
+        this.cr = cr;
+    }
     //
     @Autowired
     private RespostaModelo rm;
@@ -27,29 +31,38 @@ public class ClienteService{
     // Metodo para cadastrar ou alterar Clientes
     public ResponseEntity<?> cadastrarAlterar(ClienteModelo cm, String acao) {
 
-        if (cm.getNomeCliente().equals("")) {
+        if (cm.getNomeUser().equals("")) {
             rm.setMensagem("O nome do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else if (cm.getEmailCliente().equals("")) {
             rm.setMensagem("O email do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        } else if (cm.getUsuarioUser().equals("")) {
+            rm.setMensagem("O nome de usuario do cliente é obrigatório");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        } else if (cm.getSenhaUser().equals("")) {
+            rm.setMensagem("a senha do cliente é obrigatório");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        } else if (cm.getPastaCliente().equals("")) {
+            rm.setMensagem("a pasta do cliente é obrigatório");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else {
             if (acao.equals("cadastrar")) {
                 return new ResponseEntity<ClienteModelo>(cr.save(cm), HttpStatus.CREATED);
-            }else{
-                 return new ResponseEntity<ClienteModelo>(cr.save(cm), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<ClienteModelo>(cr.save(cm), HttpStatus.OK);
             }
         }
 
     }
 
     // Metodo para remove Cliente
-    public ResponseEntity<RespostaModelo> remover(int idCliente){
+    public ResponseEntity<RespostaModelo> remover(int idCliente) {
 
         cr.deleteById(idCliente);
 
-        rm.setMensagem("Produto removido com Sucesso!");
+        rm.setMensagem("Cliente removido com Sucesso!");
         return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
-        
+
     }
 }
