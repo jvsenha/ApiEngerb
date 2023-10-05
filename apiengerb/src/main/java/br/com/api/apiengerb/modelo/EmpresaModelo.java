@@ -1,10 +1,12 @@
 package br.com.api.apiengerb.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +15,7 @@ import lombok.Setter;
 @Table(name = "empresa")
 @Getter
 @Setter
-public class EmpresaModelo {
+public class EmpresaModelo extends UserModelo {
 
     //Definindo atributo idEmpressa como chave da tabela
     @Id
@@ -21,11 +23,19 @@ public class EmpresaModelo {
     private Integer idEmpresa;
     
     //Definindo demais atributos da tabela
-    private String nomeEmpresa;
+    @Column(unique=true)
+    @NotBlank
+    private UserModelo nomeEmpresa;
+    @NotBlank
     private String smtpEmpresa;
+    @NotBlank
     private Integer portaEmpresa;
-    private String usuarioEmpresa;
-    private String senhaEmpresa;
+    @Column(unique=true)
+    @NotBlank
+    private UserModelo usuarioEmpresa;
+    @NotBlank
+    @Column(length = 32)
+    private UserModelo senhaEmpresa;
 
 
 

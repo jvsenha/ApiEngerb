@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,21 +15,27 @@ import lombok.Setter;
 @Table(name = "cliente")
 @Getter
 @Setter
-public class ClienteModelo {
+public class ClienteModelo extends UserModelo{
     //Definindo atributo idCliente como chave da tabela
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCliente")
     private Integer idCliente;
-    private String nomeCliente;
+    @NotBlank
+    private UserModelo nomeCliente;
     @Column(unique=true)
+    @NotBlank
     private String emailCliente;
     @Column(unique=true)
-    private String usuarioCliente;
-    private String senhaCliente;
+    @NotBlank
+    private UserModelo usuarioCliente;
+    @NotBlank
+    @Column(length = 32)
+    private UserModelo senhaCliente;
     @Column(unique=true)
+    @NotBlank
     private String pastaCliente;
-
-
+    @NotBlank
+    private UserRole role;
     
 }

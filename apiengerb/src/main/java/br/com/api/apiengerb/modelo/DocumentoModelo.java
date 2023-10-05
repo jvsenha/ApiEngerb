@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,10 +26,13 @@ public class DocumentoModelo {
     // Chave estrangeira id_Cliente
     @ManyToOne
     @JoinColumn(name = "id_Cliente")
+    @NotBlank
     private ClienteModelo cliente;
     @Column(unique = true)
+    @NotBlank
     private String nomeDocumento;
     private Integer tamanhoDocumento;
+    @NotBlank
     private String linkDocumento;
 
 }

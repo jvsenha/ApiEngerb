@@ -10,7 +10,7 @@ import br.com.api.apiengerb.modelo.RespostaModelo;
 import br.com.api.apiengerb.repositório.ClienteRepositorio;
 
 @Service
-public class ClienteService {
+public class ClienteService{
 
     @Autowired
     private ClienteRepositorio cr;

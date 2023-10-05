@@ -16,7 +16,7 @@ import br.com.api.apiengerb.modelo.RespostaModelo;
 import br.com.api.apiengerb.services.ClienteService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="http://localhost:8080")
 public class ClienteController {
     
     @Autowired
