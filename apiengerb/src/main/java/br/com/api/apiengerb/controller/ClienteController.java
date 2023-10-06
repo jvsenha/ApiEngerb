@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.RespostaModelo;
+import br.com.api.apiengerb.modelo.UserModelo;
 import br.com.api.apiengerb.services.ClienteService;
 import br.com.api.apiengerb.services.UserService;
 
@@ -45,7 +46,7 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/listarC")
+    @GetMapping("/listar")
     public Iterable<ClienteModelo> listar(){
         return cs.listar();
     }
