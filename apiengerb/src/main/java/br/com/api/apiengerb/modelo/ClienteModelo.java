@@ -19,13 +19,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @DiscriminatorValue("CLIENTE")
 public class ClienteModelo extends UserModelo {
-    // Definindo atributo idCliente como chave da tabela
+    // Definindo atributos 
     @Column(unique = true)
     @NotBlank
     private String emailCliente;
     @Column(unique = true)
     @NotBlank
     private String pastaCliente;
+
+
+    //Método Construtor
     public ClienteModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente,
             String nomeUser, @NotBlank String emailCliente, @NotBlank String pastaCliente) {
         super(login, senhaUser, role, cliente, nomeUser);

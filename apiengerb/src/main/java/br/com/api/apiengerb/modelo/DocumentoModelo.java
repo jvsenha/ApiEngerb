@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+
+//Declarando Modelo da Classe documento e Criando tabela no banco de dados 
 @Entity
 @Table(name = "documento")
 @Getter

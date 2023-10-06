@@ -1,5 +1,7 @@
 package br.com.api.apiengerb.modelo;
 
+
+//definindo Roles de tipo de usuários
 public enum UserRole {
     EMP("empresa"),
     USER("user");

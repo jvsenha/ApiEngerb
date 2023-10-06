@@ -16,16 +16,16 @@ public class ClienteService {
     @Autowired
     private ClienteRepositorio cr;
 
-    //
+
     @Autowired
     private RespostaModelo rm;
 
-    // Método para listar todos os clientes
+    // Método para listar todos os Clientes
     public Iterable<ClienteModelo> listar() {
         return cr.findAll();
     }
 
-    // Metodo para cadastrar ou alterar Clientes
+    // Método para cadastrar ou alterar Clientes
     public ResponseEntity<?> cadastrarAlterarCli(ClienteModelo cm, String acao) {
 
         if (cm.getNomeUser().equals("")) {
@@ -53,7 +53,7 @@ public class ClienteService {
 
     }
 
-    // Metodo para remove Cliente
+    // Método para remover Clientes
     public ResponseEntity<RespostaModelo> remover(int idCliente) {
 
         cr.deleteById(idCliente);

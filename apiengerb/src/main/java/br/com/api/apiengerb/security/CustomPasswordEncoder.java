@@ -1,5 +1,10 @@
-package br.com.api.apiengerb.security;
 
+
+
+//Tentativa De Diminuir tamanho Do Hash da senha
+
+
+package br.com.api.apiengerb.security;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

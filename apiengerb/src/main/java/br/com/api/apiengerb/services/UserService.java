@@ -20,12 +20,12 @@ public class UserService {
     @Autowired
     private RespostaModelo rm;
 
-    // Método para listar todos os clientes
+    // Método para listar todos os Usuários
     public Iterable<UserModelo> listar() {
         return ur.findAll();
     }
 
-    // Metodo para cadastrar ou alterar Clientes
+    // Método para cadastrar ou alterar Usuários
     public ResponseEntity<?> cadastrarAlterar(UserModelo um, String acao) {
 
         if (um.getNomeUser().equals("")) {
@@ -47,7 +47,7 @@ public class UserService {
 
     }
 
-    // Metodo para remove Cliente
+    // Método para remove Usuários
     public ResponseEntity<RespostaModelo> remover(int idUser) {
 
         ur.deleteById(idUser);

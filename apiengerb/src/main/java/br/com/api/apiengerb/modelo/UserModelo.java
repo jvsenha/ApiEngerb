@@ -23,14 +23,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+//Declarando Modelo da Classe user e Criando tabela no banco de dados 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED) // Declarando Classe Mão de Cliente e Empresa
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING) // Declarando coluna para separar
+                                                                                       // tabela dependente(Cliente ou
+                                                                                       // empresa)
 public class UserModelo implements UserDetails {
 
     @Column(name = "idUser")
@@ -43,13 +46,13 @@ public class UserModelo implements UserDetails {
     @Column(unique = true)
     @NotBlank
     private String login;
-    @Column(length = 32)
     @NotBlank
     private String senhaUser;
     private UserRole role;
 
-  
-    public UserModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente, String nomeUser) {
+    // Declarando Método Construtor
+    public UserModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente,
+            String nomeUser) {
         this.login = login;
         this.senhaUser = senhaUser;
         this.role = role;
@@ -57,6 +60,7 @@ public class UserModelo implements UserDetails {
 
     }
 
+    // Declarando Métodos de UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.EMP)
@@ -67,7 +71,7 @@ public class UserModelo implements UserDetails {
 
     @Override
     public String getPassword() {
-     return senhaUser;
+        return senhaUser;
     }
 
     @Override
@@ -77,22 +81,22 @@ public class UserModelo implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-       return true;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-       return true;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-    return true;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-       return true;
+        return true;
     }
 
 }
