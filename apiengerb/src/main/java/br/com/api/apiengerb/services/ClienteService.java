@@ -26,7 +26,7 @@ public class ClienteService {
     }
 
     // Metodo para cadastrar ou alterar Clientes
-    public ResponseEntity<?> cadastrarAlterar(ClienteModelo cm, String acao) {
+    public ResponseEntity<?> cadastrarAlterarCli(ClienteModelo cm, String acao) {
 
         if (cm.getNomeUser().equals("")) {
             rm.setMensagem("O nome do cliente é obrigatório");

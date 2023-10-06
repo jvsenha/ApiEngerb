@@ -22,7 +22,5 @@ public class ClienteModelo extends UserModelo{
     @Column(unique=true)
     @NotBlank
     private String pastaCliente;
-    @NotBlank
-    private UserRole role;
     
 }
