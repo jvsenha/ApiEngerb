@@ -39,14 +39,18 @@ public class UserModelo implements UserDetails {
     @Column(name = "idUser")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer idUser;
-    @NotBlank
+
+    @Column(name = "nome_user", length = 100, nullable = false, unique = true)
+    @NotBlank(message = "O nome do Usuario não pode estar em branco")
     private String nomeUser;
-    @Column(unique = true)
-    @NotBlank
+
+    @Column(name = "login", length = 100, nullable = false, unique = true)
+    @NotBlank(message = "O Login não pode estar em branco")
     private String login;
-    @NotBlank
+
+    @Column(name = "senha_user", nullable = false)
+    @NotBlank(message = "A Senha não pode estar em branco")
     private String senhaUser;
     private UserRole role;
 

@@ -26,23 +26,24 @@ public class UserService {
     }
 
     // Método para cadastrar ou alterar Usuários
-    public ResponseEntity<?> cadastrarAlterar(UserModelo um, String acao) {
+    public ResponseEntity<?> cadastrar(UserModelo um) {
+            return new ResponseEntity<UserModelo>(ur.save(um), HttpStatus.CREATED);
+
+    }
+    
+    public ResponseEntity<?> Alterar(UserModelo um) {
 
         if (um.getNomeUser().equals("")) {
-            rm.setMensagem("O nome do cliente é obrigatório");
+            rm.setMessage("O nome do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else if (um.getLogin().equals("")) {
-            rm.setMensagem("O nome de usuario do cliente é obrigatório");
+            rm.setMessage("O nome de usuario do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else if (um.getSenhaUser().equals("")) {
-            rm.setMensagem("a senha do cliente é obrigatório");
+            rm.setMessage("a senha do cliente é obrigatório");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else {
-            if (acao.equals("cadastrar")) {
-                return new ResponseEntity<UserModelo>(ur.save(um), HttpStatus.CREATED);
-            } else {
                 return new ResponseEntity<UserModelo>(ur.save(um), HttpStatus.OK);
-            }
         }
 
     }
@@ -52,7 +53,7 @@ public class UserService {
 
         ur.deleteById(idUser);
 
-        rm.setMensagem("User removido com Sucesso!");
+        rm.setMessage("User removido com Sucesso!");
         return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
 
     }

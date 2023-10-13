@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,16 +20,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @DiscriminatorValue("CLIENTE")
 public class ClienteModelo extends UserModelo {
-    // Definindo atributos 
-    @Column(unique = true)
-    @NotBlank
+    // Definindo atributos
+    @Column(name = "email_cliente", nullable = false, unique = true)
+    @NotBlank(message = "O Email do Cliente não pode estar em branco")
+    @Email(message = "O Email do Cliente deve ser um endereço de e-mail válido")
     private String emailCliente;
-    @Column(unique = true)
-    @NotBlank
+
+    @Column(name = "pasta_cliente", nullable = false, unique = true)
+    @NotBlank(message = "O nome da pasta do cliente não pode estar em branco")
     private String pastaCliente;
 
-
-    //Método Construtor
+    // Método Construtor
     public ClienteModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente,
             String nomeUser, @NotBlank String emailCliente, @NotBlank String pastaCliente) {
         super(login, senhaUser, role, cliente, nomeUser);
@@ -36,5 +38,4 @@ public class ClienteModelo extends UserModelo {
         this.pastaCliente = pastaCliente;
     }
 
-    
 }
