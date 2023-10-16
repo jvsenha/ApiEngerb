@@ -3,6 +3,7 @@ package br.com.api.apiengerb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,45 +15,46 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.apiengerb.modelo.AuthenticationDTO;
 import br.com.api.apiengerb.modelo.CadastroDTO;
 import br.com.api.apiengerb.modelo.ClienteModelo;
+import br.com.api.apiengerb.modelo.LoginResponseDTO;
 import br.com.api.apiengerb.modelo.RespostaModelo;
 import br.com.api.apiengerb.repositorio.ClienteRepositorio;
 import br.com.api.apiengerb.repositorio.UserRepositorio;
+import br.com.api.apiengerb.security.TokenService;
 import br.com.api.apiengerb.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController // Declarando classe como RestController
 @RequestMapping("auth") // mapeando URL com esse inicio
 @CrossOrigin(origins = "http://localhost:3000") // permitindo CORS
-public class AuthenticationController {
+public class AuthenticationController{
 
-    // Injeção de dependencia
-    //@Autowired
-    //private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserService us;
-
-    @Autowired
-    private UserRepositorio ur;
     
+    // Injeção de dependencia
     @Autowired
     private ClienteRepositorio cr;
 
     @Autowired
     private RespostaModelo rm;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserService us;
+
+    @Autowired
+    private UserRepositorio ur;
+
+    @Autowired
+    private TokenService ts;
+
     // Rota para login
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO data) {
-        if (this.ur.findByLogin(data.login()) == null) {
-            rm.setMessage("login ou senha não existe!");
-            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
-        } else {
-            var UsernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senhaUser());
-           // var auth = this.authenticationManager.authenticate(UsernamePassword);
-
-            return ResponseEntity.ok().body(UsernamePassword);
-        }
+        var UsernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senhaUser());
+        var auth = this.authenticationManager.authenticate(UsernamePassword);
+        var token = ts.gerarToken((ClienteModelo) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     // Rota para cadastro

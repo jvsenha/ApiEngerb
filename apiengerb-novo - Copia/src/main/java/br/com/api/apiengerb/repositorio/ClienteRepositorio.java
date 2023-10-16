@@ -12,4 +12,5 @@ public interface ClienteRepositorio extends JpaRepository<ClienteModelo, Integer
    UserDetails findByIdUser(Integer idUser);
    UserDetails findByEmailCliente(String emailCliente);
    UserDetails findByPastaCliente(String pastaCliente);
+   UserDetails findByLogin(String login);
 }
