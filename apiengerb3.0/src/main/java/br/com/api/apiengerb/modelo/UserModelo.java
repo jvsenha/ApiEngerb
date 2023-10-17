@@ -64,6 +64,15 @@ public class UserModelo implements UserDetails {
 
     }
 
+    public UserModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, EmpresaModelo empresa,
+            String nomeUser) {
+        this.login = login;
+        this.senhaUser = senhaUser;
+        this.role = role;
+        this.nomeUser = nomeUser;
+
+    }
+
     // Declarando Métodos de UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

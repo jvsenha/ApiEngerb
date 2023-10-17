@@ -12,6 +12,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import br.com.api.apiengerb.modelo.ClienteModelo;
+import br.com.api.apiengerb.modelo.EmpresaModelo;
 
 
 
@@ -27,6 +28,23 @@ public class TokenService {
             String token = JWT.create()
                             .withIssuer("apiengerb.api")
                             .withSubject(cm.getLogin())
+                            .withExpiresAt(genExpirationDate())
+                    .sign(algorithm);
+            return token;
+
+                             
+        }catch (JWTCreationException exception) {
+            throw new RuntimeException("Error while generating token", exception);
+        }
+
+    }
+
+    public String gerarTokenEmp(EmpresaModelo em){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            String token = JWT.create()
+                            .withIssuer("apiengerb.api")
+                            .withSubject(em.getLogin())
                             .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;
