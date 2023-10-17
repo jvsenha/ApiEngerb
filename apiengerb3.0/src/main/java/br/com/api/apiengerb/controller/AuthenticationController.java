@@ -24,8 +24,7 @@ import br.com.api.apiengerb.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController // Declarando classe como RestController
-@RequestMapping("auth") // mapeando URL com esse inicio
-@CrossOrigin(origins = "http://localhost:3000") // permitindo CORS
+@RequestMapping("auth") // mapeando URL com esse inicio // permitindo CORS
 public class AuthenticationController{
 
     
@@ -49,6 +48,7 @@ public class AuthenticationController{
     private TokenService ts;
 
     // Rota para login
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO data) {
         var UsernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senhaUser());
