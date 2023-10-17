@@ -5,7 +5,9 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //Declarando Modelo da Classe empresa e Criando tabela no banco de dados 
@@ -13,25 +15,23 @@ import lombok.Setter;
 @Table(name = "empresa")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @DiscriminatorValue("EMPRESA")
 public class EmpresaModelo extends UserModelo {
 
     //Definindo demais atributos da tabela
-    @Column(unique=true)
-    @NotBlank
-    private UserModelo nomeEmpresa;
-    @NotBlank
+    @Column(name = "smtp_empresa", nullable = false, unique = true)
+    @NotBlank(message = "O SMPT da Empresa não pode estar em branco")
     private String smtpEmpresa;
-    @NotBlank
+    @Column(name = "porta_empresa", nullable = false, unique = true)
     private Integer portaEmpresa;
-    @Column(unique=true)
-    @NotBlank
-    private UserModelo usuarioEmpresa;
-    @NotBlank
-    @Column(length = 32)
-    private UserModelo senhaEmpresa;
 
-
-
+    public EmpresaModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, EmpresaModelo empresa,
+            String nomeUser, @NotBlank String smtpEmpresa, @NotBlank Integer portaEmpresa) {
+        super(login, senhaUser, role, empresa, nomeUser);
+        this.smtpEmpresa = smtpEmpresa;
+        this.portaEmpresa = portaEmpresa;
+    }
     
 }

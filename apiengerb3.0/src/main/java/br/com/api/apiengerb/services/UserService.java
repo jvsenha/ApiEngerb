@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.com.api.apiengerb.modelo.EmpresaModelo;
 import br.com.api.apiengerb.modelo.RespostaModelo;
 import br.com.api.apiengerb.modelo.UserModelo;
 import br.com.api.apiengerb.repositorio.UserRepositorio;
@@ -45,6 +46,12 @@ public class UserService {
         } else {
                 return new ResponseEntity<UserModelo>(ur.save(um), HttpStatus.OK);
         }
+
+    }
+
+    // Método para cadastrar Empresa
+    public ResponseEntity<?> cadastraremp(EmpresaModelo em) {
+            return new ResponseEntity<EmpresaModelo>(ur.save(em), HttpStatus.CREATED);
 
     }
 
