@@ -13,5 +13,4 @@ public interface UserRepositorio extends JpaRepository <UserModelo, Integer>{
     // estendendo o JpaRepository e declarando findByLogin do UserDetails
      UserDetails findByLogin(String login);
     UserDetails findBySenhaUser(String senhaUser);
-    
 }

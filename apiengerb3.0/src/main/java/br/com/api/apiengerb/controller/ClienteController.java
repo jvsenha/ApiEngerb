@@ -74,6 +74,12 @@ public class ClienteController {
         return cs.listar();
     }
 
+
+      //@GetMapping("/listar")
+    //public ResponseEntity listar(){
+      //  List<ClienteResponseDTO> clienteList = this.cr.findAll().stream().map(ClienteResponseDTO::new).toList();
+        //return ResponseEntity.ok(clienteList);
+    //}
     // Rota index cliente
     @GetMapping("/")
     public String rota() {

@@ -11,6 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.api.apiengerb.repositorio.ClienteRepositorio;
 import br.com.api.apiengerb.repositorio.EmpresaRepositorio;
+import br.com.api.apiengerb.repositorio.UserRepositorio;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,20 +25,19 @@ public class SecurityFilter extends OncePerRequestFilter {
     ClienteRepositorio cr;
     @Autowired
     EmpresaRepositorio er;
+    @Autowired
+    UserRepositorio ur;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
         if(token != null){
             var login = tokenService.validateToken(token);
-            UserDetails cliente = cr.findByLogin(login);
-            UserDetails empresa = er.findByLogin(login);
-
-            var authentication = new UsernamePasswordAuthenticationToken(cliente, null, cliente.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+           
+            UserDetails user = ur.findByLogin(login);
             
-            var authenticationemp = new UsernamePasswordAuthenticationToken(empresa, null, empresa.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authenticationemp);
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
     }

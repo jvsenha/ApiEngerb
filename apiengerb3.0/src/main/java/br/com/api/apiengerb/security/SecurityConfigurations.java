@@ -34,10 +34,14 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/cliente/*").permitAll() 
-                        .requestMatchers(HttpMethod.PUT, "/cliente/*").permitAll() 
-                        .requestMatchers(HttpMethod.DELETE, "/cliente/*").permitAll() 
-                        .requestMatchers(HttpMethod.POST, "/auth/cadastrar").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/auth/loginemp").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/validar-token").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/cadastrar").hasRole("EMP")
+                        .requestMatchers(HttpMethod.POST, "/auth/cadastraremp").hasRole("EMP")
+                        .requestMatchers(HttpMethod.GET, "/cliente/carregar/{idUser}").hasRole("EMP")
+                        .requestMatchers(HttpMethod.GET, "/cliente/listar").hasRole("EMP")
+                        .requestMatchers(HttpMethod.PUT, "/cliente/alterar/{idUser}").hasRole("EMP")
+                        .requestMatchers(HttpMethod.DELETE, "/cliente/remover/{idCliente}").hasRole("EMP")
                         .anyRequest().authenticated()
 
                 )
@@ -55,7 +59,6 @@ public class SecurityConfigurations {
         config.addAllowedOrigin("http://localhost:3000"); // Domínio do seu frontend
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        config.addExposedHeader("*");
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
