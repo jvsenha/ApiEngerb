@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -34,6 +35,8 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/logout").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/validarToken").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/loginemp").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/cadastrar").hasRole("EMP")
                         .requestMatchers(HttpMethod.POST, "/auth/cadastraremp").hasRole("EMP")
@@ -44,10 +47,19 @@ public class SecurityConfigurations {
                         .anyRequest().authenticated()
 
                 )
+                .logout(logout -> logout
+                .logoutSuccessUrl("/logout") // URL para efetuar logout
+                .logoutSuccessHandler(logoutSuccessHandler()) // Manipulador de sucesso de logout
+                )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
+
+    @Bean
+    public HttpStatusReturningLogoutSuccessHandler logoutSuccessHandler() {
+        return new HttpStatusReturningLogoutSuccessHandler();
+    }
     // Criando Bean de filtro de CORS
 
     @Bean

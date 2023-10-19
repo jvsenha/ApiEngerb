@@ -1,17 +1,23 @@
 package br.com.api.apiengerb.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import br.com.api.apiengerb.modelo.AuthenticationDTO;
 import br.com.api.apiengerb.modelo.CadastroDTO;
@@ -20,6 +26,7 @@ import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.EmpresaModelo;
 import br.com.api.apiengerb.modelo.LoginResponseDTO;
 import br.com.api.apiengerb.modelo.RespostaModelo;
+import br.com.api.apiengerb.modelo.TokenDTO;
 import br.com.api.apiengerb.repositorio.ClienteRepositorio;
 import br.com.api.apiengerb.repositorio.EmpresaRepositorio;
 import br.com.api.apiengerb.repositorio.UserRepositorio;
@@ -119,6 +126,26 @@ public class AuthenticationController{
             this.us.cadastraremp(newUser);
 
             return ResponseEntity.ok().body(newUser);
+        }
+    }
+
+    @PostMapping("/validarToken")
+    public ResponseEntity<?> validarToken(@RequestBody TokenDTO data) {
+        try {
+            String token = data.getToken();
+             UserDetails user = null;
+             Collection<?> authorities=null;
+            if (token != null) {
+                var login = ts.validateToken(token);
+                user = ur.findByLogin(login);
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                authorities = user.getAuthorities();
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+           
+            return ResponseEntity.ok(authorities);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.badRequest().body("Token inválido");
         }
     }
 }
