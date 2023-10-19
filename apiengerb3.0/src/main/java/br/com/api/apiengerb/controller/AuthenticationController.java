@@ -1,6 +1,7 @@
 package br.com.api.apiengerb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,6 +54,8 @@ public class AuthenticationController{
     @Autowired
     private TokenService ts;
 
+    
+    
     // Rota para login
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
@@ -60,6 +63,8 @@ public class AuthenticationController{
         var UsernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senhaUser());
         var auth = this.authenticationManager.authenticate(UsernamePassword);
         var token = ts.gerarToken((ClienteModelo) auth.getPrincipal());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
@@ -68,6 +73,8 @@ public class AuthenticationController{
         var UsernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senhaUser());
         var auth = this.authenticationManager.authenticate(UsernamePassword);
         var token = ts.gerarTokenEmp((EmpresaModelo) auth.getPrincipal());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 

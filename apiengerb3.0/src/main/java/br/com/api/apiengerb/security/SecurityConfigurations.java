@@ -35,7 +35,6 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/loginemp").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/validar-token").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/cadastrar").hasRole("EMP")
                         .requestMatchers(HttpMethod.POST, "/auth/cadastraremp").hasRole("EMP")
                         .requestMatchers(HttpMethod.GET, "/cliente/carregar/{idUser}").hasRole("EMP")

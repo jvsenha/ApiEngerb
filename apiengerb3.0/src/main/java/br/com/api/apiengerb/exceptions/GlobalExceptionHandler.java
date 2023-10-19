@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.validation.FieldError;
@@ -59,6 +60,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
         log.error("Failed to save entity with integrity problems: " + errorMessage, dataIntegrityViolationException);
         return buildErrorResponse(
                 dataIntegrityViolationException,
+                errorMessage,
+                HttpStatus.CONFLICT,
+                request);
+    }
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(
+            InternalAuthenticationServiceException internalAuthenticationServiceException,
+            WebRequest request) {
+        String errorMessage = "Usuário inexistente ou já efetuou login";
+        log.error("Failed to save entity with integrity problems: " + errorMessage, internalAuthenticationServiceException);
+        return buildErrorResponse(
+                internalAuthenticationServiceException,
                 errorMessage,
                 HttpStatus.CONFLICT,
                 request);
