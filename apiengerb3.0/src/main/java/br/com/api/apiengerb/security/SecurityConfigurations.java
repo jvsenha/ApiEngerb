@@ -35,7 +35,7 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/logout").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/validarToken").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/loginemp").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/cadastrar").hasRole("EMP")

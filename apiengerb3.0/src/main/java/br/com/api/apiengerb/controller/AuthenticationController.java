@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,6 @@ import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.EmpresaModelo;
 import br.com.api.apiengerb.modelo.LoginResponseDTO;
 import br.com.api.apiengerb.modelo.RespostaModelo;
-import br.com.api.apiengerb.modelo.TokenDTO;
 import br.com.api.apiengerb.repositorio.ClienteRepositorio;
 import br.com.api.apiengerb.repositorio.EmpresaRepositorio;
 import br.com.api.apiengerb.repositorio.UserRepositorio;
@@ -36,9 +36,8 @@ import jakarta.validation.Valid;
 
 @RestController // Declarando classe como RestController
 @RequestMapping("auth") // mapeando URL com esse inicio // permitindo CORS
-public class AuthenticationController{
+public class AuthenticationController {
 
-    
     // Injeção de dependencia
     @Autowired
     private ClienteRepositorio cr;
@@ -61,8 +60,6 @@ public class AuthenticationController{
     @Autowired
     private TokenService ts;
 
-    
-    
     // Rota para login
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
@@ -75,7 +72,7 @@ public class AuthenticationController{
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-     @PostMapping("/loginemp")
+    @PostMapping("/loginemp")
     public ResponseEntity<?> loginemp(@RequestBody @Valid AuthenticationDTO data) {
         var UsernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senhaUser());
         var auth = this.authenticationManager.authenticate(UsernamePassword);
@@ -91,7 +88,7 @@ public class AuthenticationController{
         if (this.ur.findByLogin(data.login()) != null) {
             rm.setMessage("Esse usuário já existe!");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
-        }else if (this.cr.findByEmailCliente(data.emailCliente()) != null) {
+        } else if (this.cr.findByEmailCliente(data.emailCliente()) != null) {
             rm.setMessage("Esse email já está cadastrado!");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else if (this.cr.findByPastaCliente(data.pastaCliente()) != null) {
@@ -113,7 +110,7 @@ public class AuthenticationController{
         if (this.ur.findByLogin(data.login()) != null) {
             rm.setMessage("Esse usuário já existe!");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
-        }else if (this.er.findBySmtpEmpresa(data.smtpEmpresa()) != null) {
+        } else if (this.er.findBySmtpEmpresa(data.smtpEmpresa()) != null) {
             rm.setMessage("Esse email já está cadastrado!");
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         } else if (this.er.findByPortaEmpresa(data.portaEmpresa()) != null) {
@@ -130,22 +127,44 @@ public class AuthenticationController{
     }
 
     @PostMapping("/validarToken")
-    public ResponseEntity<?> validarToken(@RequestBody TokenDTO data) {
+    public ResponseEntity<?> validarToken(@RequestHeader("Authorization") String authHeader) {
         try {
-            String token = data.getToken();
-             UserDetails user = null;
-             Collection<?> authorities=null;
+            var token = authHeader.replace("Bearer ", "");
+            UserDetails user;
+            Collection<?> authorities = null;
             if (token != null) {
                 var login = ts.validateToken(token);
                 user = ur.findByLogin(login);
-                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authorities = user.getAuthorities();
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-           
+
             return ResponseEntity.ok(authorities);
         } catch (JWTVerificationException exception) {
             return ResponseEntity.badRequest().body("Token inválido");
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        try {
+            // Extrair o token do cabeçalho de autorização
+            String token = authHeader.replace("Bearer ", "");
+    
+            // Verificar se o token está na lista negra
+            if (ts.isTokenBlacklisted(token)) {
+                return ResponseEntity.badRequest().body("Token já revogado.");
+            }
+    
+            // Invalidar o token e adicioná-lo à lista negra
+            ts. blacklistToken(token);
+    
+            return ResponseEntity.ok("Logout bem-sucedido.");
+        } catch (Exception e) {
+            rm.setMessage("Erro ao realizar Logout!");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
 }
