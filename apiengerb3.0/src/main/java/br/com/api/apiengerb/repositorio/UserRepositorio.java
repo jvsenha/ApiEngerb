@@ -11,6 +11,7 @@ import br.com.api.apiengerb.modelo.UserModelo;
 @Repository
 public interface UserRepositorio extends JpaRepository <UserModelo, Integer>{
     // estendendo o JpaRepository e declarando findByLogin do UserDetails
+    UserModelo findByIdUser(int idUser);
      UserDetails findByLogin(String login);
     UserDetails findBySenhaUser(String senhaUser);
 }

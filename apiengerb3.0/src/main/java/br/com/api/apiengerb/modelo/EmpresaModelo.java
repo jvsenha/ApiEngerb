@@ -28,8 +28,8 @@ public class EmpresaModelo extends UserModelo {
     private Integer portaEmpresa;
 
     public EmpresaModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, EmpresaModelo empresa,
-            String nomeUser, @NotBlank String smtpEmpresa, @NotBlank Integer portaEmpresa) {
-        super(login, senhaUser, role, empresa, nomeUser);
+            String nomeUser, @NotBlank String smtpEmpresa, @NotBlank Integer portaEmpresa, boolean isEnabled) {
+        super(login, senhaUser, role, empresa, nomeUser, isEnabled);
         this.smtpEmpresa = smtpEmpresa;
         this.portaEmpresa = portaEmpresa;
     }

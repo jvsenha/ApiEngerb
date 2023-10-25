@@ -1,5 +1,8 @@
 package br.com.api.apiengerb.services;
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,7 @@ public class ClienteService {
     private RespostaModelo rm;
 
     // Método para listar todos os Clientes
-    public Iterable<ClienteModelo> listar() {
+    public List<ClienteModelo> listar() {
         return cr.findAll();
     }
 

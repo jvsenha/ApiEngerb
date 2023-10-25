@@ -1,5 +1,7 @@
 package br.com.api.apiengerb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.RespostaModelo;
+import br.com.api.apiengerb.modelo.UserModelo;
 import br.com.api.apiengerb.services.ClienteService;
 import br.com.api.apiengerb.services.UserService;
 
@@ -25,9 +28,13 @@ public class ClienteController {
 
     @Autowired
     private ClienteService cs;
+    
+
 
     @Autowired
     private UserService us;
+
+    
 
     @Autowired
     private RespostaModelo rm;
@@ -70,17 +77,24 @@ public class ClienteController {
 
     // Rota Para Alet
     @GetMapping("/listar")
-    public Iterable<ClienteModelo> listar() {
-        return cs.listar();
+    public ResponseEntity<List<ClienteModelo>> listarClientes() {
+        List<ClienteModelo> clientes = cs.listar();
+        return ResponseEntity.ok(clientes);
+    }
+
+    
+   
+    @PutMapping("/updateUser/{idUser}")
+    public ResponseEntity<?> updateUser(@PathVariable int idUser, @RequestBody UserModelo updatedUser) {
+        return us.updateUser(idUser, updatedUser);
+    }
+
+    @GetMapping("/isenabled/{idUser}")
+    public ResponseEntity<?> isEnabled(@PathVariable Integer idUser, ClienteModelo cm) {
+        return  us.statususer(idUser);
     }
 
 
-      //@GetMapping("/listar")
-    //public ResponseEntity listar(){
-      //  List<ClienteResponseDTO> clienteList = this.cr.findAll().stream().map(ClienteResponseDTO::new).toList();
-        //return ResponseEntity.ok(clienteList);
-    //}
-    // Rota index cliente
     @GetMapping("/")
     public String rota() {
         return "API Funcionando";

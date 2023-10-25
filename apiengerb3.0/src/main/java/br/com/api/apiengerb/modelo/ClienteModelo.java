@@ -32,8 +32,8 @@ public class ClienteModelo extends UserModelo {
 
     // Método Construtor
     public ClienteModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente,
-            String nomeUser, @NotBlank String emailCliente, @NotBlank String pastaCliente) {
-        super(login, senhaUser, role, cliente, nomeUser);
+            String nomeUser, @NotBlank String emailCliente, @NotBlank String pastaCliente, boolean isEnabled) {
+        super(login, senhaUser, role, cliente, nomeUser, isEnabled);
         this.emailCliente = emailCliente;
         this.pastaCliente = pastaCliente;
     }

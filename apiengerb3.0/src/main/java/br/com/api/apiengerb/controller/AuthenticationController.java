@@ -97,7 +97,7 @@ public class AuthenticationController {
         } else {
             String encryptedPassword = new BCryptPasswordEncoder().encode(data.senhaUser());
             ClienteModelo newUser = new ClienteModelo(data.login(), encryptedPassword, data.role(), data.cliente(),
-                    data.nomeUser(), data.emailCliente(), data.pastaCliente());
+                    data.nomeUser(), data.emailCliente(), data.pastaCliente(),data.isEnabled());
             this.us.cadastrar(newUser);
 
             return ResponseEntity.ok().body(newUser);
@@ -119,7 +119,7 @@ public class AuthenticationController {
         } else {
             String encryptedPassword = new BCryptPasswordEncoder().encode(data.senhaUser());
             EmpresaModelo newUser = new EmpresaModelo(data.login(), encryptedPassword, data.role(), data.empresa(),
-                    data.nomeUser(), data.smtpEmpresa(), data.portaEmpresa());
+                    data.nomeUser(), data.smtpEmpresa(), data.portaEmpresa(), data.isEnabled());
             this.us.cadastraremp(newUser);
 
             return ResponseEntity.ok().body(newUser);

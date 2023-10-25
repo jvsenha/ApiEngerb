@@ -54,23 +54,30 @@ public class UserModelo implements UserDetails {
     private String senhaUser;
     private UserRole role;
 
+    private boolean isEnabled;
+
+ 
+    
+    public UserModelo(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
     // Declarando Método Construtor
     public UserModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente,
-            String nomeUser) {
+            String nomeUser, boolean isEnabled ) {
         this.login = login;
         this.senhaUser = senhaUser;
         this.role = role;
         this.nomeUser = nomeUser;
-
+        this.isEnabled = isEnabled;
     }
 
     public UserModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, EmpresaModelo empresa,
-            String nomeUser) {
+            String nomeUser, boolean isEnabled) {
         this.login = login;
         this.senhaUser = senhaUser;
         this.role = role;
         this.nomeUser = nomeUser;
-
+        this.isEnabled = isEnabled;
     }
 
     // Declarando Métodos de UserDetails
@@ -109,7 +116,7 @@ public class UserModelo implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
 }

@@ -1,6 +1,5 @@
 package br.com.api.apiengerb.modelo;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +8,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -18,23 +20,25 @@ import lombok.Setter;
 @Table(name = "documento")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DocumentoModelo {
 
-    // Definindo atributo idDocumento como chave da tabela
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDocumento;
 
-    // Chave estrangeira id_Cliente
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = " id_cliente")
-    @NotBlank
-    private UserModelo cliente;
-
-    @Column(unique = true)
+    @JoinColumn(name = "id_usuario")
+    private UserModelo usuario;
+    
     @NotBlank
     private String nomeDocumento;
+
+    @NotNull
     private Integer tamanhoDocumento;
+
     @NotBlank
     private String linkDocumento;
 
