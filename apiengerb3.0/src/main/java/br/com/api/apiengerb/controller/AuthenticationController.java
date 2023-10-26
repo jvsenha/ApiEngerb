@@ -145,6 +145,25 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body("Token inválido");
         }
     }
+    @PostMapping("/dadosUser")
+    public ResponseEntity<?> dadosUser(@RequestHeader("Authorization") String authHeader) {
+        try {
+            var token = authHeader.replace("Bearer ", "");
+            UserDetails user;
+            UserDetails authorities = null;
+            if (token != null) {
+                var login = ts.validateToken(token);
+                user = ur.findByLogin(login);
+                authorities = user;
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+            return ResponseEntity.ok(authorities);
+        } catch (JWTVerificationException exception) {
+            return ResponseEntity.badRequest().body("Token inválido");
+        }
+    }
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
