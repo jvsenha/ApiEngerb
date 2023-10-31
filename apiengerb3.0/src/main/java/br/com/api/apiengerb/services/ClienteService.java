@@ -2,6 +2,7 @@ package br.com.api.apiengerb.services;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.RespostaModelo;
+import br.com.api.apiengerb.modelo.UserModelo;
 import br.com.api.apiengerb.repositorio.ClienteRepositorio;
 import br.com.api.apiengerb.repositorio.UserRepositorio;
 
@@ -65,4 +67,24 @@ public class ClienteService {
                 .orElse(null);
     }
 
+public List<ClienteModelo> listarClientesAtivos() {
+    List<UserModelo> usuariosAtivos = ur.findByIsEnabled(true);
+
+    List<ClienteModelo> clientesAtivos = usuariosAtivos.stream()
+            .filter(usuario -> usuario instanceof ClienteModelo)
+            .map(usuario -> (ClienteModelo) usuario)
+            .collect(Collectors.toList());
+
+    return clientesAtivos;
+}
+public List<ClienteModelo> listarClientesInativos() {
+    List<UserModelo> usuariosAtivos = ur.findByIsEnabled(false);
+
+    List<ClienteModelo> clientesAtivos = usuariosAtivos.stream()
+            .filter(usuario -> usuario instanceof ClienteModelo)
+            .map(usuario -> (ClienteModelo) usuario)
+            .collect(Collectors.toList());
+
+    return clientesAtivos;
+}
 }

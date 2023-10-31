@@ -46,6 +46,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/cadastraremp").hasRole("EMP")
                         .requestMatchers(HttpMethod.GET, "/cliente/carregar/{idUser}").hasRole("EMP")
                         .requestMatchers(HttpMethod.GET, "/cliente/listar").hasRole("EMP")
+                        .requestMatchers(HttpMethod.GET, "/cliente/listarAtivos").hasRole("EMP")
+                        .requestMatchers(HttpMethod.GET, "/cliente/listarInativos").hasRole("EMP")
                         .requestMatchers(HttpMethod.GET, "/documentos/listar").hasRole("EMP")
                         .requestMatchers(HttpMethod.GET, "/cliente/isenabled/{idUser}").hasRole("EMP")
                         .requestMatchers(HttpMethod.PUT, "/cliente/alterar/{idUser}").hasRole("EMP")

@@ -82,7 +82,16 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
-    
+     @GetMapping("/listarAtivos")
+    public ResponseEntity<List<ClienteModelo>> listarClientesAtivos() {
+        List<ClienteModelo> clientes = cs.listarClientesAtivos();
+        return ResponseEntity.ok(clientes);
+    }
+     @GetMapping("/listarInativos")
+    public ResponseEntity<List<ClienteModelo>> listarClientesInativos() {
+        List<ClienteModelo> clientes = cs.listarClientesInativos();
+        return ResponseEntity.ok(clientes);
+    }
    
     @PutMapping("/updateUser/{idUser}")
     public ResponseEntity<?> updateUser(@PathVariable int idUser, @RequestBody UserModelo updatedUser) {

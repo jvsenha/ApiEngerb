@@ -69,7 +69,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
     public ResponseEntity<Object> handleDataIntegrityViolationException(
             InternalAuthenticationServiceException internalAuthenticationServiceException,
             WebRequest request) {
-        String errorMessage = "Usuário inexistente ou já efetuou login";
+        String errorMessage = "Login ou Senha incorretos";
         log.error("Failed to save entity with integrity problems: " + errorMessage, internalAuthenticationServiceException);
         return buildErrorResponse(
                 internalAuthenticationServiceException,

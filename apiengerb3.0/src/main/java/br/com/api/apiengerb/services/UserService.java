@@ -29,6 +29,7 @@ public class UserService {
         return ur.findAll();
     }
 
+
     // Método para cadastrar ou alterar Usuários
     public ResponseEntity<?> cadastrar(UserModelo um) {
             return new ResponseEntity<UserModelo>(ur.save(um), HttpStatus.CREATED);
