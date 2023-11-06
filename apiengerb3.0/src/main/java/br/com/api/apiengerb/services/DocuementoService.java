@@ -60,4 +60,22 @@ public class DocuementoService {
         return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
 
     }
+
+    public ResponseEntity<RespostaModelo> removerDocumentosPorUsuario(int idUser) {
+        // Encontre os documentos associados ao usuário com base no ID do usuário
+        List<DocumentoModelo> documentos = dr.findByUsuario_IdUser(idUser);
+
+        if (!documentos.isEmpty()) {
+            // Exclua os documentos encontrados
+            dr.deleteAll(documentos);
+
+            // Crie uma resposta de sucesso
+            rm.setMessage("Documentos removidos com sucesso!");
+            return new ResponseEntity<>(rm, HttpStatus.OK);
+        } else {
+            // Se nenhum documento foi encontrado, retorne uma resposta com erro
+              rm.setMessage("Nenhum documento encontrado para o usuário com ID " + idUser);
+            return new ResponseEntity<>(rm, HttpStatus.NOT_FOUND);
+        }
+    }
 }

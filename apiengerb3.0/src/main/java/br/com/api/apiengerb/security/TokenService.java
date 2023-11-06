@@ -22,8 +22,6 @@ import br.com.api.apiengerb.repositorio.UserRepositorio;
 @Service
 public class TokenService {
 
-    @Autowired
-    private UserRepositorio ur;
 
     @Value("${api.security.token.secret}")
     private String secret;

@@ -19,6 +19,7 @@ import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.RespostaModelo;
 import br.com.api.apiengerb.modelo.UserModelo;
 import br.com.api.apiengerb.services.ClienteService;
+import br.com.api.apiengerb.services.DocuementoService;
 import br.com.api.apiengerb.services.UserService;
 
 @RestController
@@ -28,6 +29,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteService cs;
+    
+    @Autowired
+    private DocuementoService ds;
     
 
 
@@ -44,6 +48,7 @@ public class ClienteController {
     @DeleteMapping("/remover/{idCliente}")
     public ResponseEntity<RespostaModelo> remover(@PathVariable Integer idCliente) {
         rm.setMessage("Alterado com Sucesso!");
+        ds.removerDocumentosPorUsuario(idCliente);
         return cs.remover(idCliente);
     }
 
