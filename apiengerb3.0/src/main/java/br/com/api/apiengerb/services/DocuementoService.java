@@ -52,7 +52,7 @@ public class DocuementoService {
         return dr.findByUsuario_IdUser(idUser);
     }
 
-     public ResponseEntity<RespostaModelo> remover(int idDocumento) {
+     public ResponseEntity<RespostaModelo> remover(String idDocumento) {
 
         dr.deleteById(idDocumento);
 

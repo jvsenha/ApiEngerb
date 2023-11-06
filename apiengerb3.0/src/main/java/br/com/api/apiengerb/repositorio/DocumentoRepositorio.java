@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import br.com.api.apiengerb.modelo.DocumentoModelo;
 
 @Repository
-public interface DocumentoRepositorio extends JpaRepository<DocumentoModelo, Integer> {
+public interface DocumentoRepositorio extends JpaRepository<DocumentoModelo, String> {
     // Você pode adicionar métodos de consulta personalizados aqui, se necessário
      List<DocumentoModelo> findByUsuario_IdUser(@Param("idUser") Integer idUser);
 }

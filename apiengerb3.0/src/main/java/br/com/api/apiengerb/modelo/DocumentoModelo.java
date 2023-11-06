@@ -1,5 +1,6 @@
 package br.com.api.apiengerb.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -23,7 +24,9 @@ import lombok.Setter;
 public class DocumentoModelo {
 
     @Id
-    private Integer idDocumento;
+    @Column(length = 32)
+    private String idDocumento;
+    
 
     @NotNull
     @ManyToOne

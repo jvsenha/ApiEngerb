@@ -49,7 +49,7 @@ public class DocumentoController {
     }
 
      @DeleteMapping("/remover/{idDocumento}")
-    public ResponseEntity<RespostaModelo> remover(@PathVariable Integer idDocumento) {
+    public ResponseEntity<RespostaModelo> remover(@PathVariable String idDocumento) {
         rm.setMessage("removido com Sucesso!");
         return ds.remover(idDocumento);
     }
