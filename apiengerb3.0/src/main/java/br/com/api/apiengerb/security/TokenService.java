@@ -6,7 +6,6 @@ import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import br.com.api.apiengerb.modelo.ClienteModelo;
 import br.com.api.apiengerb.modelo.EmpresaModelo;
-import br.com.api.apiengerb.repositorio.UserRepositorio;
 
 @Service
 public class TokenService {
