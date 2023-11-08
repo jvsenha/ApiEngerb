@@ -1,5 +1,7 @@
 package br.com.api.apiengerb.repositorio;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,7 @@ public interface ClienteRepositorio extends JpaRepository<ClienteModelo, Integer
    UserDetails findByIdUser(Integer idUser);
    ClienteModelo findByEmailCliente(String emailCliente);
    UserDetails findByPastaCliente(String pastaCliente);
-   UserDetails findByLogin(String login);
+   ClienteModelo findByLogin(String login);
+   List<ClienteModelo> findByReset (Boolean reset);
    UserDetails findByRole(UserRole role);
 }

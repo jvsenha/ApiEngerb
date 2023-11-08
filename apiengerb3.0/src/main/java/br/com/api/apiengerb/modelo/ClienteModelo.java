@@ -29,13 +29,18 @@ public class ClienteModelo extends UserModelo {
     @Column(name = "pasta_cliente", nullable = false, unique = true)
     @NotBlank(message = "O nome da pasta do cliente não pode estar em branco")
     private String pastaCliente;
+  
+    private Boolean reset;
+
+
 
     // Método Construtor
     public ClienteModelo(@NotBlank String login, @NotBlank String senhaUser, UserRole role, ClienteModelo cliente,
-            String nomeUser, @NotBlank String emailCliente, @NotBlank String pastaCliente, boolean isEnabled) {
+            String nomeUser, @NotBlank String emailCliente, @NotBlank String pastaCliente, boolean isEnabled,  Boolean reset) {
         super(login, senhaUser, role, cliente, nomeUser, isEnabled);
         this.emailCliente = emailCliente;
         this.pastaCliente = pastaCliente;
+        this.reset = reset;
     }
 
 }

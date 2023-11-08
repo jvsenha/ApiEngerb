@@ -1,6 +1,5 @@
 package br.com.api.apiengerb.services;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,24 +66,51 @@ public class ClienteService {
                 .orElse(null);
     }
 
-public List<ClienteModelo> listarClientesAtivos() {
-    List<UserModelo> usuariosAtivos = ur.findByIsEnabled(true);
+    public List<ClienteModelo> listarClientesAtivos() {
+        List<UserModelo> usuariosAtivos = ur.findByIsEnabled(true);
 
-    List<ClienteModelo> clientesAtivos = usuariosAtivos.stream()
-            .filter(usuario -> usuario instanceof ClienteModelo)
-            .map(usuario -> (ClienteModelo) usuario)
-            .collect(Collectors.toList());
+        List<ClienteModelo> clientesAtivos = usuariosAtivos.stream()
+                .filter(usuario -> usuario instanceof ClienteModelo)
+                .map(usuario -> (ClienteModelo) usuario)
+                .collect(Collectors.toList());
 
-    return clientesAtivos;
-}
-public List<ClienteModelo> listarClientesInativos() {
-    List<UserModelo> usuariosAtivos = ur.findByIsEnabled(false);
+        return clientesAtivos;
+    }
 
-    List<ClienteModelo> clientesAtivos = usuariosAtivos.stream()
-            .filter(usuario -> usuario instanceof ClienteModelo)
-            .map(usuario -> (ClienteModelo) usuario)
-            .collect(Collectors.toList());
+    public List<ClienteModelo> listarClientesInativos() {
+        List<UserModelo> usuariosAtivos = ur.findByIsEnabled(false);
 
-    return clientesAtivos;
-}
+        List<ClienteModelo> clientesAtivos = usuariosAtivos.stream()
+                .filter(usuario -> usuario instanceof ClienteModelo)
+                .map(usuario -> (ClienteModelo) usuario)
+                .collect(Collectors.toList());
+
+        return clientesAtivos;
+    }
+
+    public ResponseEntity<?> solicitacaoReset(String Login) {
+        ClienteModelo cliente = cr.findByLogin(Login);
+        if (cliente != null) {
+            cliente.setReset(true);
+            return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
+        } else {
+            rm.setMessage("Login não encontrado");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    public ResponseEntity<?> resetPassword(String Login) {
+        ClienteModelo cliente = cr.findByLogin(Login);
+        if (cliente != null) {
+            cliente.setReset(false);
+            return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
+        } else {
+            rm.setMessage("Login não encontrado");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public List<ClienteModelo> listarReset() {
+        return cr.findByReset(true);
+    }
 }

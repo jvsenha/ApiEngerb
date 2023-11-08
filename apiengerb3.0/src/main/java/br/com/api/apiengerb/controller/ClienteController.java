@@ -29,16 +29,11 @@ public class ClienteController {
     @Autowired
     private ClienteService cs;
 
-
-
     @Autowired
     private UserService us;
 
-    
-
     @Autowired
     private RespostaModelo rm;
-
 
     // Rota para Remover cliente
     @DeleteMapping("/remover/{idCliente}")
@@ -55,12 +50,12 @@ public class ClienteController {
 
     // Rota para alterar cliente
     @PutMapping("/alterar/{idUser}")
-    public ResponseEntity<?> alterar(@RequestBody ClienteModelo cm, @PathVariable Integer  idUser) {
-       
-            cs.alterar(cm, idUser);
-            rm.setMessage("Alterado com Sucesso!");
-            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
-       
+    public ResponseEntity<?> alterar(@RequestBody ClienteModelo cm, @PathVariable Integer idUser) {
+
+        cs.alterar(cm, idUser);
+        rm.setMessage("Alterado com Sucesso!");
+        return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
+
     }
 
     // Rota para listar cliente
@@ -82,17 +77,24 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
-     @GetMapping("/listarAtivos")
+    @GetMapping("/listarAtivos")
     public ResponseEntity<List<ClienteModelo>> listarClientesAtivos() {
         List<ClienteModelo> clientes = cs.listarClientesAtivos();
         return ResponseEntity.ok(clientes);
     }
-     @GetMapping("/listarInativos")
+
+    @GetMapping("/listarInativos")
     public ResponseEntity<List<ClienteModelo>> listarClientesInativos() {
         List<ClienteModelo> clientes = cs.listarClientesInativos();
         return ResponseEntity.ok(clientes);
     }
-   
+
+    @GetMapping("/listarReset")
+    public ResponseEntity<List<ClienteModelo>> listarReset() {
+        List<ClienteModelo> clientes = cs.listarReset();
+        return ResponseEntity.ok(clientes);
+    }
+
     @PutMapping("/updateUser/{idUser}")
     public ResponseEntity<?> updateUser(@PathVariable int idUser, @RequestBody UserModelo updatedUser) {
         return us.updateUser(idUser, updatedUser);
@@ -100,9 +102,8 @@ public class ClienteController {
 
     @GetMapping("/isenabled/{idUser}")
     public ResponseEntity<?> isEnabled(@PathVariable Integer idUser, ClienteModelo cm) {
-        return  us.statususer(idUser);
+        return us.statususer(idUser);
     }
-
 
     @GetMapping("/")
     public String rota() {

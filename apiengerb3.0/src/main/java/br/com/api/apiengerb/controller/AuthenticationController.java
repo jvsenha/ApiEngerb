@@ -97,7 +97,7 @@ public class AuthenticationController {
         } else {
             String encryptedPassword = new BCryptPasswordEncoder().encode(data.senhaUser());
             ClienteModelo newUser = new ClienteModelo(data.login(), encryptedPassword, data.role(), data.cliente(),
-                    data.nomeUser(), data.emailCliente(), data.pastaCliente(),data.isEnabled());
+                    data.nomeUser(), data.emailCliente(), data.pastaCliente(),data.isEnabled(), data.reset());
             this.us.cadastrar(newUser);
 
             return ResponseEntity.ok().body(newUser);
