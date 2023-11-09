@@ -57,6 +57,14 @@ public class ClienteController {
         return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
 
     }
+    @PutMapping("/alterarsenha/{idUser}")
+    public ResponseEntity<?> alterarSenha(@RequestBody ClienteModelo cm, @PathVariable Integer idUser) {
+
+        cs.alterarSenha(cm, idUser);
+        rm.setMessage("Alterado com Sucesso!");
+        return new ResponseEntity<RespostaModelo>(rm, HttpStatus.OK);
+
+    }
 
     // Rota para listar cliente
     @GetMapping("/carregar/{idUser}")

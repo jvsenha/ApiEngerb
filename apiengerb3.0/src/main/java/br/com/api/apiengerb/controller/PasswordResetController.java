@@ -24,7 +24,7 @@ public class PasswordResetController {
 
     }
     @PostMapping("/reset-password")
-    public ResponseEntity<?> forgotPasswordfalse(@RequestBody @Valid PasswordResetInput input) {
+    public ResponseEntity<?> resetpassword(@RequestBody @Valid PasswordResetInput input) {
         return cs.resetPassword(input.login());
 
     }

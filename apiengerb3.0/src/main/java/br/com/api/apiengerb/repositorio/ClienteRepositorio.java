@@ -19,6 +19,6 @@ public interface ClienteRepositorio extends JpaRepository<ClienteModelo, Integer
    ClienteModelo findByEmailCliente(String emailCliente);
    UserDetails findByPastaCliente(String pastaCliente);
    ClienteModelo findByLogin(String login);
-   List<ClienteModelo> findByReset (Boolean reset);
+   List<ClienteModelo> findByReset (Integer reset);
    UserDetails findByRole(UserRole role);
 }

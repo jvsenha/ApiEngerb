@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +50,17 @@ public class ClienteService {
         return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
     }
 
+    @Transactional
+    public ResponseEntity<?> alterarSenha(ClienteModelo cm, Integer idUser) {
+        ClienteModelo cliente = this.carregarCLiente(idUser);
+        if (cliente != null) {
+             String encryptedPassword = new BCryptPasswordEncoder().encode(cm.getSenhaUser());
+               cliente.setSenhaUser(encryptedPassword);
+        }
+        return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
+    }
+ 
+
     // Método para remover Clientes
     public ResponseEntity<RespostaModelo> remover(int idCliente) {
 
@@ -91,7 +103,7 @@ public class ClienteService {
     public ResponseEntity<?> solicitacaoReset(String Login) {
         ClienteModelo cliente = cr.findByLogin(Login);
         if (cliente != null) {
-            cliente.setReset(true);
+            cliente.setReset(1);
             return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
         } else {
             rm.setMessage("Login não encontrado");
@@ -102,7 +114,9 @@ public class ClienteService {
     public ResponseEntity<?> resetPassword(String Login) {
         ClienteModelo cliente = cr.findByLogin(Login);
         if (cliente != null) {
-            cliente.setReset(false);
+            String encryptedPassword = new BCryptPasswordEncoder().encode(cliente.getLogin());
+            cliente.setSenhaUser(encryptedPassword);
+           cliente.setReset(2);
             return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
         } else {
             rm.setMessage("Login não encontrado");
@@ -111,6 +125,9 @@ public class ClienteService {
     }
 
     public List<ClienteModelo> listarReset() {
-        return cr.findByReset(true);
+        return cr.findByReset(1);
     }
+
+
+    
 }
