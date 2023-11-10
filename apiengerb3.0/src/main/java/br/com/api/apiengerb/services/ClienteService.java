@@ -56,6 +56,7 @@ public class ClienteService {
         if (cliente != null) {
              String encryptedPassword = new BCryptPasswordEncoder().encode(cm.getSenhaUser());
                cliente.setSenhaUser(encryptedPassword);
+                cliente.setReset(0);
         }
         return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
     }
