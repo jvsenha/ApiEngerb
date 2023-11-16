@@ -111,6 +111,16 @@ public class ClienteService {
             return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
         }
     }
+    public ResponseEntity<?> cancelReset(String Login) {
+        ClienteModelo cliente = cr.findByLogin(Login);
+        if (cliente != null) {
+            cliente.setReset(0);
+            return new ResponseEntity<ClienteModelo>(cr.save(cliente), HttpStatus.OK);
+        } else {
+            rm.setMessage("Login não encontrado");
+            return new ResponseEntity<RespostaModelo>(rm, HttpStatus.BAD_REQUEST);
+        }
+    }
     
     public ResponseEntity<?> resetPassword(String Login) {
         ClienteModelo cliente = cr.findByLogin(Login);

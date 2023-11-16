@@ -36,7 +36,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/reset/reset-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/reset/forgot-password").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/reset/change-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/reset/cancel-reset").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/validarToken").permitAll()

@@ -28,5 +28,11 @@ public class PasswordResetController {
         return cs.resetPassword(input.login());
 
     }
+   
+    @PostMapping("/cancel-reset")
+    public ResponseEntity<?> cancelReset(@RequestBody @Valid PasswordResetInput input) {
+        return cs.cancelReset(input.login());
+
+    }
 
 }
