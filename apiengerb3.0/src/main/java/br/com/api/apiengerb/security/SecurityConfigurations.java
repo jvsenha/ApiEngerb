@@ -83,7 +83,7 @@ public class SecurityConfigurations {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000"); // Domínio do seu frontend
+        config.addAllowedOrigin("https://compreagua.com.br"); // Domínio do seu frontend
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
